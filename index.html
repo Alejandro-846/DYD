@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameCampus | Generador de Personajes D&D</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@300;600;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/styles/styles.css">
+    
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+        <p>Cargando aventuras...</p>
+    </div>
+
+    <div id="app-content" style="display: none;">
+        <!-- Fondo interactivo -->
+        <div id="particles-js"></div>
+
+        <!-- Header/Navbar -->
+        <header class="header">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-dragon dragon-icon"></i>
+                    <span>GameCampus</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#generator"><i class="fas fa-hat-wizard"></i> Generador</a></li>
+                    <li><a href="#characters-list"><i class="fas fa-users"></i> Personajes</a></li>
+                    <li><button id="theme-toggle"><i class="fas fa-moon"></i></button></li>
+                </ul>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="title-gradient">FORJA TU <span class="text-rotate" data-rotate='["GUERRERO", "MAGO", "PÍCARO", "CLÉRIGO"]'></span></h1>
+                <p class="subtitle">Crea personajes únicos con <strong>rasgos personalizados</strong> usando la API de Dungeons & Dragons</p>
+                <div class="cta-container">
+                    <a href="#generator" class="cta-button pulse">
+                        <i class="fas fa-play"></i> COMENZAR
+                    </a>
+                    <a href="#characters-list" class="cta-button secondary">
+                        <i class="fas fa-eye"></i> VER PERSONAJES
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Generador de Personajes -->
+        <section class="generator-section" id="generator">
+            <h2 class="section-title">GENERADOR DE PERSONAJES</h2>
+            <div class="generator-container">
+                <!-- Formulario -->
+                <div class="form-container">
+                    <form id="character-form">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> Nombre del Personaje</label>
+                            <input type="text" id="name" placeholder="Ej: Aragorn" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="race"><i class="fas fa-paw"></i> Raza</label>
+                            <select id="race" required>
+                                <option value="">Selecciona una raza</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="class"><i class="fas fa-swords"></i> Clase</label>
+                            <select id="class" required>
+                                <option value="">Selecciona una clase</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender"><i class="fas fa-venus-mars"></i> Género</label>
+                            <select id="gender">
+                                <option value="">No especificado</option>
+                                <option value="male">Masculino</option>
+                                <option value="female">Femenino</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="alignment"><i class="fas fa-balance-scale"></i> Alineamiento</label>
+                            <select id="alignment">
+                                <option value="">No especificado</option>
+                            </select>
+                        </div>
+
+                        <!-- Selección de Equipo -->
+                        <div class="form-group">
+                            <label><i class="fas fa-shield-alt"></i> Equipo</label>
+                            <div class="equipment-selection">
+                                <div class="equipment-option">
+                                    <label for="armor">Armadura</label>
+                                    <select id="armor">
+                                        <option value="">Ninguna</option>
+                                    </select>
+                                </div>
+                                <div class="equipment-option">
+                                    <label for="weapon">Arma</label>
+                                    <select id="weapon">
+                                        <option value="">Ninguna</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selección de Habilidades -->
+                        <div class="form-group">
+                            <label><i class="fas fa-fire"></i> Habilidades</label>
+                            <div class="abilities-selection">
+                                <div class="ability-option">
+                                    <label for="skill">Habilidad</label>
+                                    <select id="skill">
+                                        <option value="">Ninguna</option>
+                                    </select>
+                                </div>
+                                <div class="ability-option">
+                                    <label for="feat">Dote</label>
+                                    <select id="feat">
+                                        <option value="">Ninguna</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="generate-btn">
+                                <i class="fas fa-magic"></i> GENERAR PERSONAJE
+                            </button>
+                            <button type="button" id="clear-form" class="clear-btn">
+                                <i class="fas fa-broom"></i> LIMPIAR
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Vista previa del personaje -->
+                <div class="preview-container">
+                    <div class="character-preview">
+                        <div class="placeholder" id="preview-placeholder">
+                            <i class="fas fa-user-circle"></i>
+                            <p>Tu personaje aparecerá aquí</p>
+                        </div>
+                        <div class="character-card" id="character-card" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lista de Personajes con Filtros -->
+        <section class="characters-list" id="characters-list">
+            <h2 class="section-title">TUS PERSONAJES</h2>
+            
+            <!-- Filtros de búsqueda -->
+            <div class="filters-container">
+                <div class="search-group">
+                    <input type="text" id="search-name" placeholder="Buscar por nombre...">
+                    <button id="search-button"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-group">
+                    <select id="filter-race">
+                        <option value="">Todas las razas</option>
+                    </select>
+                    <select id="filter-class">
+                        <option value="">Todas las clases</option>
+                    </select>
+                    <select id="filter-gender">
+                        <option value="">Todos los géneros</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Femenino</option>
+                        <option value="other">Otro</option>
+                    </select>
+                    <button id="reset-filters" class="clear-btn">
+                        <i class="fas fa-times"></i> Limpiar filtros
+                    </button>
+                </div>
+            </div>
+            
+            <div class="list-container" id="characters-container">
+                <div class="empty-state">
+                    <i class="fas fa-users-slash"></i>
+                    <p>No hay personajes guardados</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal para detalles -->
+        <div class="modal" id="character-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="modal-character-content"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GameCampus</h3>
+                    <p>Generador de personajes para Dungeons & Dragons 5e</p>
+                </div>
+                <div class="footer-section">
+                    <h3>API Utilizada</h3>
+                    <a href="https://www.dnd5eapi.co/" target="_blank">D&D 5e API</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>proyecto@gamecampus.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 GameCampus. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script src="src/js/main.js"></script>
+</body>
+</html>
